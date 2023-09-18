@@ -1,4 +1,3 @@
-.gitignore
 client_secret.json
 .env
 sheets.googleapis.com-python.json
