@@ -33,8 +33,26 @@ scheduleObject = []
 for i in schedule:
     dateStart = datetime.fromisoformat(i['start'])
     dateEnd = datetime.fromisoformat(i['end'])
-    results = ((dateEnd - dateStart) - timedelta(seconds=1))
-    warningHours = str(results)
+    
+    if dateStart.weekday() <= 4:
+        startWorkHours  = dateEnd.replace(hour=8, minute=59, second=59)
+        endWorkHours = dateStart.replace(hour=19, minute=0, second=0)
+        results = ((startWorkHours  - endWorkHours))
+        warningHours = str(results)
+
+    if dateStart.weekday() > 5:
+        finalSemana = dateEnd.replace(hour=8, minute=59, second=59)
+        inicioSemana = dateStart.replace(hour=19, minute=0, second=0)
+        results = ((finalSemana - inicioSemana))
+        warningHours = str(results)
+
+    if dateStart.weekday() == 4:
+        results = ((dateEnd - endWorkHours) - timedelta(seconds=1))
+        warningHours = str(results)
+
+    if dateStart.weekday() == 5:
+        result = ((dateEnd - dateStart) - timedelta(seconds=1))
+        warningHours = str(results)
 
     objected = {
         "username": i['user']['summary'],
